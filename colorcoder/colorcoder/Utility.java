@@ -1,16 +1,11 @@
 package colorcoder;
-
 import java.util.EnumSet;
 
 public class Utility {
-
-
     static void testNumberToPair(int pairNumber,
                                  MajorColor expectedMajor,
-                                 MinorColor expectedMinor)
-    {
-        ColorPair colorPair = GetColorFromPairNumber(pairNumber);
-        System.out.println("Got pair " + colorPair.ToString());
+                                 MinorColor expectedMinor) {
+        ColorPair colorPair = ColorPair.GetColorFromPairNumber(pairNumber);
         assert colorPair.getMajor() == expectedMajor : Constants.VALIDATION_FAILED;
         assert colorPair.getMinor() == expectedMinor : Constants.VALIDATION_FAILED;
     }
@@ -21,7 +16,6 @@ public class Utility {
             int expectedPairNumber,boolean validationFlag)
     {
         int pairNumber = ColorPair.GetPairNumberFromColor(major, minor);
-        System.out.println("Got pair number " + pairNumber);
         if(validationFlag)
          assert pairNumber == expectedPairNumber : Constants.VALIDATION_FAILED;
         else{
@@ -32,13 +26,6 @@ public class Utility {
                 System.out.println("For MajorColor:"+Constants.majorColors[major.getIndex()]+",MinorColor:"+Constants.minorColorNames[major.getIndex()]+" Correct Pair Numbers is:"+pairNumber);
             }
         }
-    }
-
-    static ColorPair GetColorFromPairNumber(int pairNumber) {
-        int zeroBasedPairNumber = pairNumber - 1;
-        MajorColor majorColor = fromIndex((zeroBasedPairNumber / Constants.minorColorNames.length),MajorColor.class);
-        MinorColor minorColor = fromIndex(zeroBasedPairNumber % Constants.minorColorNames.length,MinorColor.class);
-        return new ColorPair(majorColor, minorColor);
     }
 
     public static  <E extends Enum<E>> E fromIndex(int index, Class<E> clazz) {
@@ -56,20 +43,6 @@ public class Utility {
                     }
                 }
         }
-
         return null;
     }
-
-    public static void printManual() {
-        int count =1;
-        for( MajorColor majorColor: MajorColor.values() ){
-            String majorColorName=Constants.majorColors[majorColor.getIndex()];
-            for( MinorColor minorColor: MinorColor.values()){
-                System.out.println("SL.NO:"+count+",MajorColor:"+majorColorName+",MinorColor:"+Constants.minorColorNames[minorColor.getIndex()]);
-                count++;
-            }
-        }
-    }
-
-
 }
